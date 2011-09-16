@@ -1,0 +1,89 @@
+{% include 'desktop/common/head.html' %}
+<body>
+    {% include 'desktop/common/top.html' %}
+    <div id="Wrapper">
+    <div id="Main">
+        <div id="Sidebar">   
+        </div>
+        <div id="Rightbar">
+            {% include 'desktop/rightbar/user.html' %}
+        </div>
+        <div id="Content">
+            <div class="box">
+                <div class="cell"><span class="fade"><a href="/">{{ site.title }}</a> <span class="chevron">&nbsp;›&nbsp;</span> {{ l10n.signup }}</span></div>
+                <div class="inner">
+                    <form action="/signup/" method="post">
+        			{% if errors %}
+        			<strong>{{ l10n.resolve_errors }}</strong>
+        			<div class="sep10"></div>
+        			<ul>
+        				{% if member_username_error %}
+        				<li>{{ member_username_error_message }}</li>
+        				{% endif %}
+        				{% if member_password_error %}
+        				<li>{{ member_password_error_message }}</li>
+        				{% endif %}
+        				{% if member_email_error %}
+        				<li>{{ member_email_error_message }}</li>
+        				{% endif %}
+        				{% if recaptcha_error %}
+        				<li>{{ recaptcha_error_message }}</li>
+                        {% endif %}
+        			</ul>
+        			<div class="sep10"></div>
+        			{% endif %}
+        			<script type="text/javascript">
+                    var RecaptchaOptions = {
+                        theme : 'blackglass'
+                    };
+                    </script>
+        			<table cellpadding="5" cellspacing="0" border="0">
+        			    <tr>
+        			        <td width="80" align="right">
+        			            {{ l10n.username }}
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="text" class="sl" name="username" value="{{ member_username|escape }}" />
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			            {{ l10n.password }}
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="password" class="sl" name="password" value="{{ member_password|escape }}" />
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			            {{  l10n.email }}
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="text" class="sl" name="email" value="{{ member_email|escape }}" />
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			        </td>
+        			        <td width="200" align="left">
+        			            {{ captchahtml|safe }}
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="submit" value="{{ l10n.signup }}" class="super normal button" />
+        			        </td>
+        			    </tr>
+        			</table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="c"></div>
+    </div>
+    </div>
+    {% include 'desktop/common/bottom.html' %}
+</body>
+</html>

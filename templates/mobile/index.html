@@ -1,0 +1,26 @@
+{% include 'common/head.html' %}
+<body>
+	{% include 'common/top.html' %}
+	<div id="Main">
+		<div class="section"><div class="fr"><a href="/recent" class="black">更多最近的 50 个</a></div>最新主题</div>
+		<div id="topics_index">
+        {{ home }}
+		</div>
+		{% if member %}
+        <script type="text/javascript">
+        blocked = [{{ blocked }}];
+        $("#topics_index").children('.cell').each( function(index) {
+            for (i in blocked) {
+                if ($(this).hasClass('from_' + blocked[i])) {
+                    $(this).css('display', 'none');
+                }
+            }
+        });
+        </script>
+        {% endif %}
+		{{ s }}
+	</div>
+	{% include 'common/bottom.html' %}
+	{% include 'ads/running.html' %}
+</body>
+</html>
