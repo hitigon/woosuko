@@ -20,6 +20,7 @@ from django.core.context_processors import request
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.core.cache import cache as memcache
+from django.core.exceptions import ObjectDoesNotExist
 import math
 from iv2ex import SYSTEM_VERSION
 from iv2ex import config
@@ -342,7 +343,7 @@ def SigninHandler(request):
         l10n = GetMessages(member, site)
         template_values['l10n'] = l10n
         errors = 0
-        error_messages = ['', '请输入用户名和密码', '你输入的用户名或密码不正确']
+        error_messages = ['', '请输入用户名和密码', '你输入的用户名或密码不正确', '请勿采用ROOT账号登陆']
         if (len(u) > 0 and len(p) > 0):
             # 邮箱登陆,转化为用户名登陆
             if '@' in u:
@@ -355,11 +356,15 @@ def SigninHandler(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    member = Member.objects.get(user__id__exact=user.id)
-                    expire = datetime.datetime.now() + datetime.timedelta(days=365)
-                    expire_f = time.mktime(expire.timetuple())
-                    response.set_cookie("auth", member.auth, expire_f)
-                    return HttpResponseRedirect('/')
+                    try:
+                        member = Member.objects.get(user__id__exact=user.id)
+                    except ObjectDoesNotExist:
+                        errors = 3
+                    else:
+                        expire = datetime.datetime.now() + datetime.timedelta(days=365)
+                        expire_f = time.mktime(expire.timetuple())
+                        response.set_cookie("auth", member.auth, expire_f)
+                        return HttpResponseRedirect('/')
             else:
                 errors = 2
         else:
