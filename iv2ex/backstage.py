@@ -648,6 +648,7 @@ def BackstageNewSectionHandler(request):
         site = GetSite()
         template_values = {}
         template_values['site'] = site
+        template_values['page_title'] = site.title + u' › 添加新区域'
         template_values['system_version'] = SYSTEM_VERSION
         member = CheckAuth(request)
         template_values['member'] = member
@@ -655,7 +656,7 @@ def BackstageNewSectionHandler(request):
         template_values['l10n'] = l10n
         if (member):
             if (member.level == 0):
-                path = os.path.join('mobile', 'backstage_new_section.html')
+                path = os.path.join('desktop', 'backstage_new_section.html')
                 return render_to_response(path, template_values)
             else:
                 return HttpResponseRedirect('/')
@@ -666,6 +667,7 @@ def BackstageNewSectionHandler(request):
         site = GetSite()
         template_values = {}
         template_values['site'] = site
+        template_values['page_title'] = site.title + u' › 添加新区域'
         template_values['system_version'] = SYSTEM_VERSION
         member = CheckAuth(request)
         template_values['member'] = member
@@ -945,6 +947,7 @@ def BackstageNewNodeHandler(request,section_name):
         site = GetSite()
         template_values = {}
         template_values['site'] = site
+        template_values['page_title'] = site.title + u' › 添加新节点'
         template_values['system_version'] = SYSTEM_VERSION
         member = CheckAuth(request)
         l10n = GetMessages(member, site)
@@ -957,7 +960,7 @@ def BackstageNewNodeHandler(request,section_name):
                     template_values['section'] = q[0]
                 else:
                     template_values['section'] = False
-                path = os.path.join('mobile', 'backstage_new_node.html')
+                path = os.path.join('desktop', 'backstage_new_node.html')
                 return render_to_response(path, template_values)
             else:
                 return HttpResponseRedirect('/')
@@ -968,6 +971,7 @@ def BackstageNewNodeHandler(request,section_name):
         site = GetSite()
         template_values = {}
         template_values['site'] = site
+        template_values['page_title'] = site.title + u' › 添加新节点'
         template_values['system_version'] = SYSTEM_VERSION
         member = CheckAuth(request)
         l10n = GetMessages(member, site)

@@ -1,0 +1,81 @@
+{% include 'desktop/common/head.html' %}
+<body>
+    {% include 'desktop/common/top.html' %}
+    <div id="Wrapper">
+    <div id="Main">
+        <div id="Sidebar">   
+        </div>
+        <div id="Rightbar">
+            {% include 'desktop/rightbar/user.html' %}
+        </div>
+        <div id="Content">
+            {% if message %}
+            <div class="box">
+                <div class="inner">{{ message }}</div>
+            </div>
+            <div class="sep20"></div>
+            {% endif %}
+            <div class="box">
+                <div class="cell"><span class="fade"><a href="/">{{ site.title }}</a> <span class="chevron">&nbsp;›&nbsp;</span> <a href="/backstage">后台</a> <span class="chevron">&nbsp;›&nbsp;</span> 新建区域</span></div>
+                <div class="inner">
+                    <form action="/backstage-new-section/" method="post">
+                    {% if errors %}
+        			<strong>请解决以下错误之后继续。</strong>
+        			<div class="sep10"></div>
+        			<ul>
+        				{% if section_title_error %}
+        				<li>{{ section_title_error_message }}</li>
+        				{% endif %}
+        				{% if section_name_error %}
+        				<li>{{ section_name_error_message }}</li>
+        				{% endif %}
+        				{% if section_description_error %}
+        				<li>{{ section_description_error_message }}</li>
+        				{% endif %}
+        			</ul>
+        			<div class="sep10"></div>
+        			{% endif %}
+                    <table cellpadding="5" cellspacing="0" border="0">
+        			    <tr>
+        			        <td width="80" align="right" valign="top">
+        			            <div class="sep5"></div>
+        			            区域名 
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="text" class="sl" name="name" value="{{ section_name|escape }}" />
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			            区域标题
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="text" class="sl" name="title" value="{{ section_title|escape }}" />
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			            区域副标题
+        			        </td>
+        			        <td width="200" align="left">
+                                <input type="text" class="sl" name="title_alternative" value="{{ section_title_alternative|escape }}" />
+        			        </td>
+        			    </tr>
+        			    <tr>
+        			        <td width="80" align="right">
+        			        </td>
+        			        <td width="200" align="left">
+        			            <input type="submit" value="Create"/>
+        			        </td>
+        			    </tr>
+        			</table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="c"></div>
+    </div>
+    </div>
+    {% include 'desktop/common/bottom.html' %}
+</body>
+</html>
