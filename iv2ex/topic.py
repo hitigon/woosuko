@@ -476,7 +476,7 @@ def TopicHandler(request, topic_num):
                 if r is None:
                     replies = memcache.get('topic_' + str(topic.num) + '_replies_filtered_compressed_' + str(page_current))
                     if replies is None:
-                        q5 = Reply.objects.filter(topic_num=int(topic_num),member_num=member.num).order_by('created')[int(page_start):int(page_start)+int(page_size)]
+                        q5 = Reply.objects.filter(topic_num=int(topic_num),member_num=topic.member.num).order_by('created')[int(page_start):int(page_start)+int(page_size)]
                         replies = q5
                         memcache.set('topic_' + str(topic.num) + '_replies_filtered_compressed_' + str(page_current), GetPacked(replies), 7200)
                     else:
