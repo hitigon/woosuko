@@ -2,12 +2,17 @@
 '''
 Created on 11-9-12
 
-@author: qiaoshun8888
+@intro: Based on Project Babel(V2EX) made by @Livid
+@author: qiaoshun8888 hitigon
+@utime: 2011-09-16 11:15 PM
+
 '''
 import os
 import random
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
-from iv2ex.models import PlaceMessage
+from django.template.loader import get_template, Context
+from iv2ex.models import PlaceMessage, Counter
 from v2ex.babel.da import GetSite, GetPlaceByIP, CreatePlaceByIP
 from v2ex.babel.l10n import GetMessages
 from v2ex.babel.security import CheckAuth
@@ -60,20 +65,19 @@ def PlaceHandler(request, ip):
         template_values['page_title'] = site.title + u' › ' + ip
         path = os.path.join('desktop', 'place.html')
         return render_to_response(path, template_values)
-
-    def post(self, ip):
+    else:
         site = GetSite()
-        if 'Referer' in self.request.headers:
-            go = self.request.headers['Referer']
+        if 'HTTP_REFERER' in request.META:
+            go = request.META['HTTP_REFERER']
         else:
-            go = '/place'
-        member = CheckAuth(self)
+            go = '/place/'
+        member = CheckAuth(request)
         place = GetPlaceByIP(ip)
-        say = self.request.get('say').strip()
+        say = request.POST['say'].strip()
         if len(say) > 0 and len(say) < 280 and member and place:
             if member.ip == ip:
                 message = PlaceMessage()
-                q = db.GqlQuery('SELECT * FROM Counter WHERE name = :1', 'place_message.max')
+                q = Counter.objects.filter(name='place_message.max')
                 if (q.count() == 1):
                     counter = q[0]
                     counter.value = counter.value + 1
@@ -81,7 +85,7 @@ def PlaceHandler(request, ip):
                     counter = Counter()
                     counter.name = 'place_message.max'
                     counter.value = 1
-                q2 = db.GqlQuery('SELECT * FROM Counter WHERE name = :1', 'place_message.total')
+                q2 = Counter.objects.filter(name='place_message.total')
                 if (q2.count() == 1):
                     counter2 = q2[0]
                     counter2.value = counter2.value + 1
@@ -94,38 +98,28 @@ def PlaceHandler(request, ip):
                 message.place_num = place.num
                 message.member = member
                 message.content = say
-                message.put()
-                counter.put()
-                counter2.put()
-        self.redirect(go)
+                message.in_reply_to_id = 0
+                message.save()
+                counter.save()
+                counter2.save()
+        return HttpResponseRedirect(go)
 
-def PlaceMessageRemoveHandler(request):
-    def get(self, key):
-        if 'Referer' in self.request.headers:
-            go = self.request.headers['Referer']
+def PlaceMessageRemoveHandler(request, message_num):
+    if request.method == 'GET':
+        site = GetSite()
+        if 'HTTP_REFERER' in request.META:
+            go = request.META['HTTP_REFERER']
         else:
-            go = '/place'
-        member = CheckAuth(self)
+            go = '/place/'
+        member = CheckAuth(request)
         if member:
-            message = db.get(db.Key(key))
-            if message:
-                if message.member.num == member.num:
+            message = PlaceMessage.objects.filter(num=int(message_num))
+            if message and len(message) == 1:
+                if message[0].member.num == member.num:
                     message.delete()
-                    q = db.GqlQuery('SELECT * FROM Counter WHERE name = :1', 'place_message.total')
+                    q = Counter.objects.filter(name='place_message.total')
                     if (q.count() == 1):
                         counter = q[0]
                         counter.value = counter.value - 1
-                        counter.put()
-        self.redirect(go)
-
-#def main():
-#    application = webapp.WSGIApplication([
-#    ('/place/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})', PlaceHandler),
-#    ('/remove/place_message/(.*)', PlaceMessageRemoveHandler)
-#    ],
-#                                         debug=True)
-#    util.run_wsgi_app(application)
-#
-#
-#if __name__ == '__main__':
-#    main()
+                        counter.save()
+        return HttpResponseRedirect(go)

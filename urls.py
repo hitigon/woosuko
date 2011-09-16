@@ -75,6 +75,7 @@ urlpatterns += patterns('',
 from woosuko.iv2ex import place as ip
 urlpatterns += patterns('',
     (r'^place/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})', ip.PlaceHandler),
+    (r'^remove/place_message/(.*)', ip.PlaceMessageRemoveHandler),
 )
 
 from woosuko.iv2ex import backstage as ib
