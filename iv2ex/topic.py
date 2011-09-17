@@ -18,6 +18,8 @@ import math
 
 from iv2ex import SYSTEM_VERSION
 from iv2ex.models import Node, Section, Topic, Counter, Reply, Notification, Page
+from twitter_api.oauth import OAuthToken
+from twitter_api.oauthtwitter import OAuthApi
 from v2ex.babel.da import GetSite, GetKindByName, GetKindByNum, GetPacked, GetUnpacked
 from v2ex.babel.l10n import GetMessages
 from v2ex.babel.security import CheckAuth
@@ -26,8 +28,6 @@ from v2ex.babel.ua import detect
 from iv2ex.itaskqueue import ITaskQueueManage
 
 import config
-from twitter.oauthtwitter import OAuthApi
-from twitter.oauth import OAuthToken
 
 from config import twitter_consumer_key as CONSUMER_KEY
 from config import twitter_consumer_secret as CONSUMER_SECRET
@@ -306,7 +306,7 @@ def NewTopicHandler(request, node_name):
                     if member.twitter_oauth == 1 and member.twitter_sync == 1:
                         access_token = OAuthToken.from_string(member.twitter_oauth_string)
                         twitter = OAuthApi(CONSUMER_KEY, CONSUMER_SECRET, access_token)
-                        status = topic.title + ' #' + topic.node.name + ' http://' + request.META['Host'] + '/t/' + str(topic.num)
+                        status = topic.title + ' #' + topic.node.name + ' http://' + request.META['HTTP_HOST'] + '/t/' + str(topic.num)
                         try:
                             twitter.PostUpdate(status.encode('utf-8'))
                         except:

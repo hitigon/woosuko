@@ -140,6 +140,19 @@ urlpatterns += patterns('',
     (r'^notifications/', ino.NotificationsHandler),
 )
 
+from woosuko.iv2ex import t as itw
+urlpatterns += patterns('',
+    (r'^twitter/$', itw.TwitterHomeHandler),
+    (r'^twitter/mentions/$', itw.TwitterMentionsHandler),
+    (r'^twitter/inbox/$', itw.TwitterDMInboxHandler),
+    (r'^twitter/user/([a-zA-Z0-9\_]+)', itw.TwitterUserTimelineHandler),
+    (r'^twitter/link/', itw.TwitterLinkHandler),
+    (r'^twitter/unlink/$', itw.TwitterUnlinkHandler),
+    (r'^twitter/oauth/$', itw.TwitterCallbackHandler),
+    (r'^twitter/tweet/$', itw.TwitterTweetHandler),
+    #(r'^twitter/api/$', itw.TwitterApiCheatSheetHandler),
+)
+
 from iv2ex.itaskqueue import ITaskQueueThread
 itaskqueue =  ITaskQueueThread(2)
 itaskqueue.start()

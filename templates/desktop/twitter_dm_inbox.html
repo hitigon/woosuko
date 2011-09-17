@@ -1,21 +1,21 @@
-{% include 'common/head.html' %}
+{% include 'desktop/common/head.html' %}
 <body>
-    {% include 'common/top.html' %}
+    {% include 'desktop/common/top.html' %}
     <div id="Wrapper">
     <div id="Main">
         <div id="Sidebar">   
         </div>
         <div id="Rightbar">
-            {% include 'rightbar/user.html' %}
+            {% include 'desktop/rightbar/user.html' %}
             <div class="sep20"></div>
-            {% include 'rightbar/ads.html' %}
+            {% include 'desktop/rightbar/ads.html' %}
         </div>
         <div id="Content">
             <div class="box">
                 <div class="cell"><div class="fr"><strong><span class="snow bigger" id="tc">140</span></strong></div>
-                    <strong><span class="fade bigger"><img src="/static/img/bird.png" /> &nbsp; <a href="/twitter">Home</a> &nbsp; <a href="/twitter/mentions">Mentions</a> &nbsp; Direct Messages</span></strong>
+                    <strong><span class="fade bigger"><img src="/media/img/bird.png" /> &nbsp; <a href="/twitter/">Home</a> &nbsp; <a href="/twitter/mentions/">Mentions</a> &nbsp; Direct Messages</span></strong>
                     <div class="sep10"></div>
-                    {% include 'common/tweet.html' %}
+                    {% include 'desktop/common/tweet.html' %}
                 </div>
                 {% for message in messages %}
                 {% if forloop.last %}
@@ -43,6 +43,6 @@
     <div class="c"></div>
     </div>
     </div>
-    {% include 'common/bottom.html' %}
+    {% include 'desktop/common/bottom.html' %}
 </body>
 </html>

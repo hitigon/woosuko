@@ -15,8 +15,10 @@ __version__ = "0.2"
 
 from twitter import Api, User
 
+from twitter_api import oauth
+
 from django.utils import simplejson
-import oauth
+
 
 # Taken from oauth implementation at: http://github.com/harperreed/twitteroauth-python/tree/master
 REQUEST_TOKEN_URL = 'https://twitter.com/oauth/request_token'
