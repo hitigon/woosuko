@@ -233,7 +233,7 @@ class PlaceMessage(models.Model):
     place_num = models.IntegerField()
     member = models.ForeignKey(Member)
     content = models.TextField(blank=True)
-    in_reply_to = models.ForeignKey('self')
+    #in_reply_to = models.ForeignKey(self.PlaceMessage)
     source = models.CharField(max_length=255, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 

@@ -98,7 +98,6 @@ def PlaceHandler(request, ip):
                 message.place_num = place.num
                 message.member = member
                 message.content = say
-                message.in_reply_to_id = 0
                 message.save()
                 counter.save()
                 counter2.save()
