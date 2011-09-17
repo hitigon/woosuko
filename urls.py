@@ -7,7 +7,6 @@ from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
-from iv2ex.woosuko import getdata2
 
 admin.autodiscover()
 
