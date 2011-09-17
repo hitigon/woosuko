@@ -886,7 +886,10 @@ def NodeHandler(request, node_name):
                     pages = int(node.topics / page_size)
                 else:
                     pages = int(node.topics / page_size) + 1
-                page = request.GET['p']
+                if 'p' in request.GET:
+                    page = request.GET['p']
+                else:
+                    page = ''
                 if (page == '') or (page is None):
                     page = 1
                 else:

@@ -1,2 +1,2 @@
 {% load filters  %}
-{{ topic.content|escape|youtube|youku|imgly|clly|mentions|gist|urlize|linebreaksbr }}
+{{ topic.content|escape|youtube|imgly|clly|gist|urlize|mentions|safe|linebreaksbr }}
