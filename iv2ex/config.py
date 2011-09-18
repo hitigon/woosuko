@@ -17,8 +17,8 @@ mobileme_password = ''
 #else:
 #    twitter_consumer_key = ''
 #    twitter_consumer_secret = ''
-twitter_consumer_key = 'ToJ9e6mGUXxv9v4iaS7Jyw'
-twitter_consumer_secret = '9d0JyzyEFrHVt5IT7eLP5d6fndMOfE2WIGqtII'
+twitter_consumer_key = ''
+twitter_consumer_secret = ''
 
 fts_enabled = False
 fts_server = ''
