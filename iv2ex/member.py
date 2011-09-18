@@ -265,7 +265,10 @@ def SettingsHandler(request):
                 u'电子邮件地址长度不能超过 32 个字符',
                 u'你输入的电子邮件地址不符合规则',
                 u'抱歉这个电子邮件地址已经有人注册过了']
-            member_email = request.POST['email'].strip()
+            if 'email' in request.POST:
+                member_email = request.POST['email'].strip()
+            else:
+                member_email = ''
             if (len(member_email) == 0):
                 errors = errors + 1
                 member_email_error = 1
@@ -472,7 +475,10 @@ def SettingsHandler(request):
             template_values['member_l10n'] = member_l10n
             # Verification: twitter_sync
             if member.twitter_oauth == 1:
-                member_twitter_sync = request.POST['twitter_sync']
+                if 'twitter_sync' in request.POST:
+                    member_twitter_sync = request.POST['twitter_sync']
+                else:
+                    member_twitter_sync = ''
                 if member_twitter_sync == 'on':
                     member_twitter_sync = 1
                 else:

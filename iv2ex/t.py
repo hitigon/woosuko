@@ -106,10 +106,19 @@ def TwitterCallbackHandler(request):
                 member.twitter_id = user.id
                 member.twitter_name = user.name
                 member.twitter_screen_name = user.screen_name
-                member.twitter_location = user.location
-                member.twitter_description = user.description
+                if not user.location or len(user.location)==0:
+                    member.twitter_location = ''
+                else:
+                    member.twitter_location = user.location
+                if not user.description or len(user.description)==0:
+                    member.twitter_description = ''
+                else:
+                    member.twitter_description = user.description
                 member.twitter_profile_image_url = user.profile_image_url
-                member.twitter_url = user.url
+                if not user.url or len(user.url)==0:
+                    member.twitter_url = ''
+                else:
+                    member.twitter_url = user.url
                 member.twitter_statuses_count = user.statuses_count
                 member.twitter_followers_count = user.followers_count
                 member.twitter_friends_count = user.friends_count
