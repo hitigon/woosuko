@@ -345,14 +345,29 @@ def SigninHandler(request):
         errors = 0
         error_messages = ['', '请输入用户名和密码', '你输入的用户名或密码不正确', '请勿采用ROOT账号登陆']
         if (len(u) > 0 and len(p) > 0):
-            # 邮箱登陆,转化为用户名登陆
+            # Convert email to username
             if '@' in u:
                 q = User.objects.filter(email=u.lower())
                 if len(q) == 1:
                     q = q[0]
                     u = q.username
-            # 用户名登陆
+            # User authenticate
             user = authenticate(username=u, password=p)
+            # If password is not correct, try the old password(MD5|Upper) of woosuko.com
+            if user is None:
+                p_md5 = str(hashlib.md5(p).hexdigest()).upper()
+                user = Member.objects.filter(username_lower=u.lower(),oldpassword=p_md5)
+                if len(user) > 0:
+                    # Change current password
+                    member = user[0]
+                    user = User.objects.get(id=member.user.id)
+                    user.set_password(p)
+                    user.save()
+                    member.auth = hashlib.sha1(str(member.num) + ':' + member.user.password).hexdigest()
+                    member.save()
+                    user = authenticate(username=u, password=p)
+                else:
+                    user = None
             if user is not None:
                 if user.is_active:
                     login(request, user)
