@@ -32,6 +32,12 @@
     </div>
     <div class="inner">{% ifequal member.notifications 0 %}<a href="/notifications" class="fade">{{ member.notifications }} 条未读提醒</a>{% else %}<img src="/media/img/dot_orange.png" align="absmiddle" />&nbsp;<strong><a href="/notifications">{{ member.notifications }} 条未读提醒</a></strong>{% endifequal %}</div>
     {% if member.avatar_large_url %}
+        {% if member.truename %}
+        {% else %}
+            <div class="yellow">
+                <span class="fade">请完善您的个人资料 <a href="/settings/">现在就去完善</a></span>
+            </div>
+        {% endif %}
     {% else %}
     <div class="yellow">
         <span class="fade">你还没有上传头像 <a href="/settings-avatar/">现在就上传</a></span>

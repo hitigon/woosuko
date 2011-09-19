@@ -41,6 +41,11 @@ username_too_short = 'Username should have at least 3 characters'
 username_invalid = 'Username can only use 0-9, a-z, A-Z and underscore'
 username_taken = 'Sorry, this username is taken by other'
 
+realname_empty = "Please input your real name"
+realname_too_long = "Real name should not be longer than 20 characters"
+
+sex_empty = "Please choice your sex"
+
 # Messages on /signout
 
 signin_again = 'Sign In Again'
@@ -89,6 +94,7 @@ header_last_replied = "Last Replied"
 # Messages on /settings
 
 realname = "Real name"
+sex = "Sex"
 username = "Account"
 edit_username = "Edit"
 email = "Email"

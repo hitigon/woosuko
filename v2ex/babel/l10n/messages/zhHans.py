@@ -41,6 +41,11 @@ username_too_short = '用户名长度至少 3 个字符'
 username_invalid = '用户名只能使用 0-9, a-z, A-Z 及 _'
 username_taken = '抱歉，这个用户名已经被注册了'
 
+realname_empty = "请输入真实姓名"
+realname_too_long = "真实姓名长度不能超过 20 个字符"
+
+sex_empty = "请选择性别"
+
 # Messages on /signout
 
 signin_again = '重新登入'
@@ -89,6 +94,7 @@ header_last_replied = "最后回复时间"
 # Messages on /settings
 
 realname = "真实姓名"
+sex = "性别"
 username = "账户"
 edit_username = "更改"
 email = "电子邮件"

@@ -145,6 +145,7 @@ def SettingsHandler(request):
         if (member):
             template_values['member'] = member
             template_values['member_realname'] = member.truename
+            template_values['member_sex'] = member.sex
             template_values['member_username'] = member.user.username
             template_values['member_email'] = member.user.email
             if (member.website == None):
@@ -217,10 +218,41 @@ def SettingsHandler(request):
         if (member):
             template_values['member'] = member
             template_values['member_realname'] = member.truename
+            template_values['member_sex'] = member.sex
             template_values['member_username'] = member.user.username
             template_values['member_email'] = member.user.email
             template_values['member_website'] = member.website
             template_values['member_twitter'] = member.twitter
+            # Verification: realname
+            member_realname_error = 0
+            member_realname_error_messages = ['',
+                l10n.realname_empty,
+                l10n.realname_too_long,]
+            member_realname = request.POST['realname'].strip()
+            if (len(member_realname) == 0):
+                errors = errors + 1
+                member_realname_error = 1
+            else:
+                if (len(member_realname) > 20):
+                    errors = errors + 1
+                    member_realname_error = 2
+            template_values['member_realname'] = member_realname
+            template_values['member_realname_error'] = member_realname_error
+            template_values['member_realname_error_message'] = member_realname_error_messages[member_realname_error]
+            # Verification: sex
+            member_sex_error = 0
+            member_sex_error_messages = ['',
+                l10n.sex_empty,]
+            if 'sex' in request.POST:
+                member_sex = request.POST['sex'].strip()
+            else:
+                member_sex = ''
+            if (len(member_sex) == 0):
+                errors = errors + 1
+                member_sex_error = 1
+            template_values['member_sex'] = member_sex
+            template_values['member_sex_error'] = member_sex_error
+            template_values['member_sex_error_message'] = member_sex_error_messages[member_sex_error]
             # Verification: username
             member_username_error = 0
             member_username_error_messages = ['',
@@ -513,6 +545,8 @@ def SettingsHandler(request):
             template_values['errors'] = errors
             if (errors == 0):
                 user = request.user
+                member.truename = member_realname
+                member.sex = member_sex
                 # 如果用户更改了账户,则editable置为0
                 if user.username != member_username:
                     user.username = member_username
