@@ -5,17 +5,18 @@
 	<meta content='True' name='HandheldFriendly' />
 	<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
 	<title>{% if one %}{{ site.title }} › {{ one.username|escape }}{% else %}{{ site.title }} › Member Not Found{% endif %}</title>
-	<link rel="stylesheet" type="text/css" media="screen"  href="/static/css/mobile/style.css?v={{ system_version }}" />
+	<link rel="stylesheet" type="text/css" media="screen"  href="/media/css/mobile/style.css?v={{ system_version }}" />
 	<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-	{% include 'common/top.html' %}
+    {% load filters %}
+	{% include 'desktop/common/top.html' %}
     <div id="Main">
 		{% if one %}
 		<div class="section"><div class="fr">第 {{ one.num }} 号会员，于 {{ one.created|timezone:8|date:"Y-n-j" }} 加入</div><a href="/" class="black">{{ site.title }}</a> › {{ one.username|escape }}</a></div>
 		<div class="cell">
 			<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>
-				<td valign="top" class="avatar">{{ one|avatar:"normal" }}</td>
+				<td valign="top" class="">{{ one|avatar:"normal"|safe }}</td>
 				<td style="padding-left: 8px" valign="top">
 					<h1>{{ one.username|escape }}</h1>
 					{% ifnotequal one.website '' %}
@@ -44,6 +45,6 @@
         <div class="section"><a href="/" class="black">{{ site.title }}</a> › Member Not Found</div>
         {% endif %}
 	</div>
-	{% include 'common/bottom.html' %}
+	{% include 'desktop/common/bottom.html' %}
 </body>
 </html>

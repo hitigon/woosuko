@@ -5,11 +5,11 @@
 	<meta content='True' name='HandheldFriendly' />
 	<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
 	<title>{{ site.title }} › 后台</title>
-	<link rel="stylesheet" type="text/css" media="screen"  href="/static/css/mobile/style.css?v={{ system_version }}" />
+	<link rel="stylesheet" type="text/css" media="screen"  href="/media/css/mobile/style.css?v={{ system_version }}" />
 	<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-	{% include 'common/top.html' %}
+	{% include 'desktop/common/top.html' %}
     <div id="Main">
 		<div class="section"><a href="/" class="black">{{ site.title }}</a> › 后台</div>
 		<div class="cell">
@@ -25,6 +25,6 @@
             {{ member_max }} 位注册会员
 		</div>
 	</div>
-	{% include 'common/bottom.html' %}
+	{% include 'desktop/common/bottom.html' %}
 </body>
 </html>
