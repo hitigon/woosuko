@@ -9,9 +9,16 @@ import threading
 import time
 import sys
 import datetime
+from iv2ex.mail import send_register_email
 from iv2ex.models import ITaskQueue, Topic, Page, Counter, Notification, Member, Reply
 from v2ex.babel.da import GetMemberByUsername, GetKindByNum
 from django.core.cache import cache as memcache
+
+class ITaskID():
+    NOTIFICATION_TOPIC = '/notifications/topic/'
+    NOTIFICATION_REPLY = '/notifications/reply/'
+    NOTIFICATION_CHECH = '/notifications/check/'
+    REGISTER_EMAIL = '/register/mail/'
 
 class ITaskQueueManage():
 
@@ -44,15 +51,18 @@ class ITaskQueueThread(threading.Thread):
                     task.lock = 1
                     task.save()
                     # 执行任务
-                    if task.data.find('/notifications/topic/') != -1:
-                        topic_id = int(task.data.replace('/notifications/topic/',''))
+                    if task.data.find(ITaskID.NOTIFICATION_TOPIC) != -1:
+                        topic_id = int(task.data.replace(ITaskID.NOTIFICATION_TOPIC,''))
                         Task_NotificationsTopicHandler(topic_id)
-                    elif task.data.find('/notifications/reply/') != -1:
-                        reply_id = int(task.data.replace('/notifications/reply/',''))
+                    elif task.data.find(ITaskID.NOTIFICATION_REPLY) != -1:
+                        reply_id = int(task.data.replace(ITaskID.NOTIFICATION_REPLY,''))
                         Task_NotificationsReplyHandler(reply_id)
-                    elif task.data.find('/notifications/check/') != -1:
-                        check_id = int(task.data.replace('/notifications/check/',''))
+                    elif task.data.find(ITaskID.NOTIFICATION_CHECH) != -1:
+                        check_id = int(task.data.replace(ITaskID.NOTIFICATION_CHECH,''))
                         Task_NotificationsCheckHandler(check_id)
+                    elif task.data.find(ITaskID.REGISTER_EMAIL) != -1:
+                        user_data = task.data.replace(ITaskID.REGISTER_EMAIL,'').split('###') # email | username | password
+                        send_register_email(user_data[0], user_data[1], user_data[2])
                     else:
                         pass
                     # 执行完任务后删除

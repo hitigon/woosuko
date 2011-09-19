@@ -25,6 +25,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import math
 from iv2ex import SYSTEM_VERSION
 from iv2ex import config
+from iv2ex.itaskqueue import ITaskQueueManage, ITaskID
 from iv2ex.models import Member, Counter, Node, Section, Topic
 from v2ex.babel.da import GetSite, GetKindByName, GetKindByNum
 from v2ex.babel.ext import captcha
@@ -573,6 +574,9 @@ def SignupHandler(request):
             expire_f = time.mktime(expire.timetuple())
             response.set_cookie("auth", member.auth, expire_f)
             memcache.delete('member_total')
+            # 发送邮件
+            ITQM = ITaskQueueManage()
+            ITQM.add(data=ITaskID.REGISTER_EMAIL+member_email.lower()+"###"+member_username+"###"+member_password)
             return HttpResponseRedirect('/')
         else:
             chtml = captcha.displayhtml(

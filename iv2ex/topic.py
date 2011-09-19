@@ -31,7 +31,7 @@ from v2ex.babel.l10n import GetMessages
 from v2ex.babel.security import CheckAuth
 from v2ex.babel.ua import detect
 
-from iv2ex.itaskqueue import ITaskQueueManage
+from iv2ex.itaskqueue import ITaskQueueManage, ITaskID
 
 import config
 
@@ -327,7 +327,7 @@ def NewTopicHandler(request, node_name):
                             member.save()
 
                     # Notifications: mention_topic
-                    ITQM.add(data='/notifications/topic/' + str(topic.id))
+                    ITQM.add(data=ITaskID.NOTIFICATION_TOPIC + str(topic.id))
                     #taskqueue.add(url='/notifications/topic/' + str(topic.key()))
 
                     return HttpResponseRedirect('/t/' + str(topic.num) + '#reply0')
@@ -612,7 +612,7 @@ def TopicHandler(request, topic_num):
                 topic = q[0]
                 try:
                     topic.hits = topic.hits + 1
-                    topic.put()
+                    topic.save()
                 except:
                     topic.hits = topic.hits - 1
             template_values['topic'] = topic
@@ -737,10 +737,10 @@ def TopicHandler(request, topic_num):
                     notification.save()
 
                     for key in keys:
-                        ITQM.add(data='/notifications/check/' + key)
+                        ITQM.add(data=ITaskID.NOTIFICATION_CHECH + key)
                         #taskqueue.add(url='/notifications/check/' + key)
 
-                ITQM.add(data='/notifications/reply/' + str(reply.id))
+                ITQM.add(data=ITaskID.NOTIFICATION_REPLY + str(reply.id))
                 #taskqueue.add(url='/notifications/reply/' + str(reply.id))
 
                 page_size = TOPIC_PAGE_SIZE

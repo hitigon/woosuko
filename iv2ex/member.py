@@ -17,6 +17,7 @@ from django.shortcuts import render_to_response
 import time
 import sys
 from iv2ex import SYSTEM_VERSION
+from iv2ex.itaskqueue import ITaskQueueManage, ITaskID
 from iv2ex.models import Topic, Reply, Member
 import settings
 from v2ex.babel.da import GetSite, GetMemberByUsername
