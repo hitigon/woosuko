@@ -1,2 +1,3 @@
 {% load filters  %}
-{{ topic.content|escape|youtube|imgly|clly|gist|urlize|mentions|safe|linebreaksbr }}
+{{ topic.content|safe|youtube|imgly|clly|urlize|mentions }}
+{# del |gist #}

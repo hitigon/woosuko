@@ -12,6 +12,7 @@ import random
 import re
 import datetime
 import time
+import urllib
 from django.contrib.auth import authenticate, login, logout
 from django.template.loader import get_template
 from django.template import Context;
@@ -968,8 +969,8 @@ def NodeApiHandler(request):
         else:
             self.error(404)
 
-def SearchHandler(request):
-    def get(self, q):
+def SearchHandler(request, q):
+    if request.method == 'GET':
         site = GetSite()
         q = urllib.unquote(q)
         template_values = {}
@@ -982,9 +983,8 @@ def SearchHandler(request):
         template_values['page_title'] = site.title + u' › 搜索 ' + q.decode('utf-8')
         template_values['q'] = q
         if config.fts_enabled is not True:
-            path = os.path.join(os.path.dirname(__file__), 'tpl', 'desktop', 'search_unavailable.html')
-            output = template.render(path, template_values)
-            self.response.out.write(output)
+            path = os.path.join('desktop', 'search_unavailable.html')
+            return render_to_response(path, template_values)
         else:
             if re.findall('^([a-zA-Z0-9\_]+)$', q):
                 node = GetKindByName('Node', q.lower())

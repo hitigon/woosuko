@@ -11,7 +11,7 @@ KindEditor.plugin('image', function(K) {
 	var self = this, name = 'image',
 		allowImageUpload = K.undef(self.allowImageUpload, true),
 		allowFileManager = K.undef(self.allowFileManager, false),
-		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
+		uploadJson = K.undef(self.uploadJson, '/t/upload/'), /* Edited by JohnQiao 2011-9-19 14:29:55 */
 		imgPath = self.basePath + 'plugins/image/images/',
 		lang = self.lang(name + '.');
 	self.plugin.image = {
@@ -130,7 +130,7 @@ KindEditor.plugin('image', function(K) {
 			var uploadbutton = K.uploadbutton({
 				button : K('.ke-upload-button', div)[0],
 				fieldName : 'imgFile',
-				url : uploadJson + '?dir=image',
+				url : uploadJson + '', /* del "?dir=image"  Edited by JohnQiao 2011-9-19 14:54:54 */
 				afterUpload : function(data) {
 					if (data.error === 0) {
 						var width = widthBox.val(),

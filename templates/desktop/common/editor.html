@@ -1,19 +1,17 @@
+{% csrf_token %}
 <link rel="stylesheet" href="/media/editor/themes/default/default.css" />
 <script charset="utf-8" src="/media/editor/kindeditor.js"></script>
 <script charset="utf-8" src="/media/editor/lang/zh_CN.js"></script>
 <script type="text/javascript">
-        KindEditor.ready(function(K) {
-        K.create('textarea[name="content"]' : {
-            resizeType : 1,
-                    allowPreviewEmoticons : false,
-                    allowImageUpload : false,
-                    items : [
-                        'fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold', 'italic', 'underline',
-                        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                        'insertunorderedlist', '|', 'emoticons', 'image', 'link']
-                });
-            });
+KindEditor.ready(function(K) {
+	K.create('textarea[name="content"]', {
+		resizeType : 1,
+		allowPreviewEmoticons : true,
+		allowImageUpload : true,
+		items : [
+			'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+			'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+			'insertunorderedlist', '|', 'emoticons', 'map', 'link']
+	});
+});
 </script>
-<div id="tab1" style="">
-	<textarea name="content" style="width:700px;height:300px;"></textarea>
-</div>

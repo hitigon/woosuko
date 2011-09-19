@@ -30,6 +30,7 @@
                     {% endif %}
                     <input type="text" name="title" value="{{ topic_title|escape }}" class="sll" />
                     <div class="sep10"></div>
+                    {% include 'desktop/common/editor.html' %}
                     <textarea name="content" class="mll tall">{{ topic_content|escape }}</textarea>
                     {{ tt|safe }}
                     <div class="sep10"></div>

@@ -2,7 +2,9 @@
 '''
 Created on 11-9-13
 
+@intro: Based on Project Babel(V2EX) made by @Livid
 @author: qiaoshun8888
+
 '''
 import logging
 import os
@@ -10,14 +12,18 @@ import datetime
 import pickle
 import random
 import re
+import Image
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.loader import get_template, Context
 from django.core.cache import cache as memcache
 import math
+from django.utils import simplejson
+import time
 
 from iv2ex import SYSTEM_VERSION
 from iv2ex.models import Node, Section, Topic, Counter, Reply, Notification, Page
+import settings
 from twitter_api.oauth import OAuthToken
 from twitter_api.oauthtwitter import OAuthApi
 from v2ex.babel.da import GetSite, GetKindByName, GetKindByNum, GetPacked, GetUnpacked
@@ -1201,6 +1207,41 @@ def ReplyEditHandler(request, reply_num):
                 return HttpResponseRedirect('/')
         else:
             return HttpResponseRedirect('/signin')
+
+def TopicUploadImage(request):
+    if request.method == 'POST':
+        member = CheckAuth(request)
+        if (member):
+            try:
+                image_req = request.FILES['imgFile']
+                if image_req is None:
+                    return HttpResponse(simplejson.dumps({'error':1},{'message','Can not found upload image.'}))
+                ext = str(image_req).split('.');
+                # 图片文件格式，并且文件大小不能超过2MB
+                if len(ext) == 2 and image_req.size<1024*1024*2:
+                    ext = ext[1].lower()
+                    if ext=="jpg" or ext=="jpeg" or ext=="bmp" or  ext=='png':
+                        timestamp = str(int(time.mktime(datetime.datetime.now().timetuple())))
+                        datetoday= str(datetime.datetime.today())[0:10].replace('-', '')
+                        new_name_src = timestamp + "." + ext
+                        save_path = settings.STATIC_UPLOAD + "/" + member.user.username + "/" + datetoday
+                        if not os.path.exists(save_path):
+                            os.makedirs(save_path)
+                        # Source image
+                        image = Image.open(image_req)
+                        if image.width>600:
+                            image.thumbnail((600,600),Image.ANTIALIAS)
+                        image.save(save_path + "/" + new_name_src, 'jpeg')
+                        url = settings.STATIC_UPLOAD_WEB + member.user.username + "/" + datetoday + "/" + new_name_src
+                        return HttpResponse(simplejson.dumps({'error':0},{'url',url}))
+                    else:
+                        return HttpResponse(simplejson.dumps({'error':1},{'message','Image type is not supported.(jpg,jpeg,bmp,png)'}))
+                else:
+                    return HttpResponse(simplejson.dumps({'error':1},{'message','The image is too large (too many bytes)'}))
+            except:
+                return HttpResponse(simplejson.dumps({'error':1},{'message','Server error: ' + sys.exc_info()}))
+        return HttpResponse(simplejson.dumps({'error':1},{'message','Non login user.'}))
+    return HttpResponse(simplejson.dumps({'error':1},{'message','Request type error.'}))
 
 def TopicHitHandler(topic_id):
     topic = Topic.objects.get(id=int(topic_id))
