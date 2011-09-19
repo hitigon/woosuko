@@ -1,6 +1,6 @@
-{% include 'desktop/common/head.html' %}
+{% include 'mobile/common/head.html' %}
 <body>
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
 	<div id="Main">
 		<div class="section"><a href="/" class="black">{{ site.title }}</a> › 记事本</div>
 		<div class="cell"><input type="button" value="新建记事" onclick="location.href = '/notes/new';" /></div>
@@ -10,6 +10,6 @@
 		</div>
 		{% endfor %}
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 </body>
 </html>

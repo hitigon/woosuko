@@ -9,15 +9,15 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
     <div id="Main">
 		<div class="section"><a href="/" class="black">{{ site.title }}</a> › 后台</div>
 		<div class="cell">
-			<a href="/backstage/new/section">添加新区域</a>
+			<a href="/backstage-new-section">添加新区域</a>
 			<div class="sep10"></div>
 			<ul>
 			    {% for section in sections%}
-			    <li><a href="/backstage/section/{{ section.name }}">{{ section.title }}</a></li>
+			    <li><a href="/backstage-section/{{ section.name }}">{{ section.title }}</a></li>
 			    {% endfor %}
 			</ul>
 		</div>
@@ -25,6 +25,6 @@
             {{ member_max }} 位注册会员
 		</div>
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 </body>
 </html>

@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
     <div id="Main">
 		<div class="section"><a href="/" class="black">{{ site.title }}</a> › <a href="/go/{{ node.name }}" class="black">{{ node.title|escape }}</a> › <a href="/t/{{ topic.num}}" class="black">{{ topic.title|escape }}</a> › 编辑</div>
 	    <div class="cell">
@@ -35,6 +35,6 @@
 			</form>
 		</div>
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 </body>
 </html>

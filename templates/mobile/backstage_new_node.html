@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
     <div id="Main">
 		<div class="section"><a href="/" class="black">{{ site.title }}</a> › <a href="/backstage" class="black">后台</a> › <a href="/backstage-section/{{ section.name }}" class="black">{{ section.title }}</a> › 新建节点</div>
 		<div class="cell">
@@ -66,6 +66,6 @@
 			</form>
 		</div>
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 </body>
 </html>

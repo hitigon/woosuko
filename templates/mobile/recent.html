@@ -1,7 +1,7 @@
-{% include 'desktop/common/head.html' %}
+{% include 'mobile/common/head.html' %}
 <body>
     {% load filters %}
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
 	<div id="Main">
 		<div class="section"><a href="/" class="black">{{ site.title }}</a> › 最近的 50 个主题</div>
 		<div id="topics_index">
@@ -34,7 +34,7 @@
         {% endif %}
 		{{ s }}
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 	{% include 'mobile/common/ads.html' %}
 </body>
 </html>

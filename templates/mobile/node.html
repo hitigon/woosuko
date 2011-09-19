@@ -10,7 +10,7 @@
 </head>
 <body>
     {% load filters %}
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
 	<div id="Main">
 	    <div class="section"><div class="fr">{{ node.topics }} 个主题</div><a href="/" class="black">{{ site.title }}</a> › {{ node.title }}</div>
 	    {% if member %}
@@ -33,7 +33,7 @@
 		</div>
 		{% endfor %}
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 	{% include 'mobile/ads/running.html' %}
 </body>
 </html>

@@ -9,16 +9,16 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-	{% include 'desktop/common/top.html' %}
+	{% include 'mobile/common/top.html' %}
     <div id="Main">
 			{% if section %}
 			<div class="section"><a href="/" class="black">{{ site.title }}</a> › <a href="/backstage" class="black">后台</a> › {{ section.title|escape }}</div>
 			<div class="cell">
-			<a href="/backstage/new/node/{{ section.name }}">添加新节点</a>
+			<a href="/backstage-new-node/{{ section.name }}">添加新节点</a>
 			<div class="sep10"></div>
 			<ul>
 			    {% for node in nodes %}
-			    <li><a href="/backstage/node/{{ node.name }}">{{ node.title }}</a></li>
+			    <li><a href="/backstage-node/{{ node.name }}">{{ node.title }}</a></li>
 			    {% endfor %}
 			</ul>
 			</div class="cell">
@@ -29,6 +29,6 @@
 			</div class="cell">
 			{% endif %}
 	</div>
-	{% include 'desktop/common/bottom.html' %}
+	{% include 'mobile/common/bottom.html' %}
 </body>
 </html>
