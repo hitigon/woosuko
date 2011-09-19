@@ -89,14 +89,14 @@
         			        </td>
         			        <td width="200" align="left">
                                 {% ifequal member_sex 'M' %}
-                                <input type="checkbox" name="sex" value="M" checked />男
+                                <input type="radio" name="sex" value="M" checked />男
                                 {% else %}
-                                <input type="checkbox" name="sex" value="M" />男
+                                <input type="radio" name="sex" value="M" />男
                                 {% endifequal %}
                                 {% ifequal member_sex 'W' %}
-                                <input type="checkbox" name="sex" value="W" checked />女
+                                <input type="radio" name="sex" value="W" checked />女
                                 {% else %}
-                                <input type="checkbox" name="sex" value="W" />女
+                                <input type="radio" name="sex" value="W" />女
                                 {% endifequal %}
         			        </td>
         			    </tr>

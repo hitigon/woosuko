@@ -486,10 +486,12 @@ def SettingsHandler(request):
                 member_show_home_top = int(request.POST['show_home_top'])
             except:
                 member_show_home_top = 1
+            template_values['member_show_home_top'] = member_show_home_top
             try:
                 member_show_quick_post = int(request.POST['show_quick_post'])
             except:
                 member_show_quick_post = 0
+            template_values['member_show_quick_post'] = member_show_quick_post
             if member_show_home_top not in [0, 1]:
                 member_show_home_top = 1
             if member_show_quick_post not in [0, 1]:

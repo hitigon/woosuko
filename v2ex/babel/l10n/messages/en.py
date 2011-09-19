@@ -44,7 +44,7 @@ username_taken = 'Sorry, this username is taken by other'
 realname_empty = "Please input your real name"
 realname_too_long = "Real name should not be longer than 20 characters"
 
-sex_empty = "Please choice your sex"
+sex_empty = "Please choose the sex"
 
 # Messages on /signout
 
