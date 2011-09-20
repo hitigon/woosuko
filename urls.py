@@ -53,7 +53,7 @@ urlpatterns += patterns('',
 #    ('/reset/([0-9]+)', PasswordResetHandler),
 #    ('/go/([a-zA-Z0-9]+)', NodeHandler),
 #    ('/n/([a-zA-Z0-9]+).json', NodeApiHandler),
-#    ('/q/(.*)', SearchHandler),
+    (r'^q/(.*)', iv.SearchHandler),
 #    ('/_dispatcher', DispatcherHandler),
     (r'^changes/', iv.ChangesHandler),
 #    ('/(.*)', RouterHandler)
@@ -114,7 +114,8 @@ urlpatterns += patterns('',
     (r'^edit-topic/([0-9]+)', it.TopicEditHandler),
     (r'^edit-reply/([0-9]+)', it.ReplyEditHandler),
     (r'^hit-topic/(?P<topic_id>.*)$', it.TopicHitHandler),
-    (r'^hit-page/(?P<page_id>.*)$', it.PageHitHandler)
+    (r'^hit-page/(?P<page_id>.*)$', it.PageHitHandler),
+    (r'^t/upload/', it.TopicUploadImage),
 )
 
 from woosuko.iv2ex import favorite as ifa

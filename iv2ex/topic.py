@@ -817,7 +817,6 @@ def TopicHandler(request, topic_num):
         else:
             return HttpResponseRedirect('/signin')
 
-
 def TopicEditHandler(request, topic_num):
     if request.method == 'GET':
         site = GetSite()
@@ -1079,7 +1078,6 @@ def TopicDeleteHandler(request, topic_num):
                     memcache.delete('home_rendered_mobile')
         return HttpResponseRedirect('/')
 
-
 def TopicPlainTextHandler(request):
     def get(self, topic_num):
         site = GetSite()
@@ -1100,19 +1098,6 @@ def TopicPlainTextHandler(request):
             self.response.out.write(output)
         else:
             self.error(404)
-
-
-#def TopicIndexHandler(request):
-#    def post(self, topic_num):
-#        site = GetSite()
-#        if config.fts_enabled:
-#            if os.environ['SERVER_SOFTWARE'] == 'Development/1.0':
-#                try:
-#                    urlfetch.fetch('http://127.0.0.1:20000/index/' + str(topic_num), headers = {"Authorization" : "Basic %s" % base64.b64encode(config.fts_username + ':' + config.fts_password)})
-#                except:
-#                    pass
-#            else:
-#                urlfetch.fetch('http://' + config.fts_server + '/index/' + str(topic_num), headers = {"Authorization" : "Basic %s" % base64.b64encode(config.fts_username + ':' + config.fts_password)})
 
 def ReplyEditHandler(request, reply_num):
     if request.method == 'GET':
@@ -1215,7 +1200,7 @@ def TopicUploadImage(request):
             try:
                 image_req = request.FILES['imgFile']
                 if image_req is None:
-                    return HttpResponse(simplejson.dumps({'error':1},{'message','Can not found upload image.'}))
+                    return HttpResponse(simplejson.dumps({'error':1,'message':'Can not found upload image.'}))
                 ext = str(image_req).split('.');
                 # 图片文件格式，并且文件大小不能超过2MB
                 if len(ext) == 2 and image_req.size<1024*1024*2:
@@ -1229,19 +1214,18 @@ def TopicUploadImage(request):
                             os.makedirs(save_path)
                         # Source image
                         image = Image.open(image_req)
-                        if image.width>600:
-                            image.thumbnail((600,600),Image.ANTIALIAS)
+                        image.thumbnail((600,600),Image.ANTIALIAS)
                         image.save(save_path + "/" + new_name_src, 'jpeg')
                         url = settings.STATIC_UPLOAD_WEB + member.user.username + "/" + datetoday + "/" + new_name_src
-                        return HttpResponse(simplejson.dumps({'error':0},{'url',url}))
+                        return HttpResponse(simplejson.dumps({'error':0,'url':url}))
                     else:
-                        return HttpResponse(simplejson.dumps({'error':1},{'message','Image type is not supported.(jpg,jpeg,bmp,png)'}))
+                        return HttpResponse(simplejson.dumps({'error':1,'message':'Image type is not supported.(jpg,jpeg,bmp,png)'}))
                 else:
-                    return HttpResponse(simplejson.dumps({'error':1},{'message','The image is too large (too many bytes)'}))
+                    return HttpResponse(simplejson.dumps({'error':1,'message':'The image is too large (too many bytes)'}))
             except:
-                return HttpResponse(simplejson.dumps({'error':1},{'message','Server error: ' + sys.exc_info()}))
-        return HttpResponse(simplejson.dumps({'error':1},{'message','Non login user.'}))
-    return HttpResponse(simplejson.dumps({'error':1},{'message','Request type error.'}))
+                return HttpResponse(simplejson.dumps({'error':1,'message':'Server error: ' + str(sys.exc_info())}))
+        return HttpResponse(simplejson.dumps({'error':1,'message':'Non login user.'}))
+    return HttpResponse(simplejson.dumps({'error':1,'message':'Request type error.'}))
 
 def TopicHitHandler(topic_id):
     topic = Topic.objects.get(id=int(topic_id))
@@ -1254,6 +1238,21 @@ def PageHitHandler(page_id):
     if page:
         page.hits = page.hits + 1
         page.save()
+
+
+
+#def TopicIndexHandler(request):
+#    def post(self, topic_num):
+#        site = GetSite()
+#        if config.fts_enabled:
+#            if os.environ['SERVER_SOFTWARE'] == 'Development/1.0':
+#                try:
+#                    urlfetch.fetch('http://127.0.0.1:20000/index/' + str(topic_num), headers = {"Authorization" : "Basic %s" % base64.b64encode(config.fts_username + ':' + config.fts_password)})
+#                except:
+#                    pass
+#            else:
+#                urlfetch.fetch('http://' + config.fts_server + '/index/' + str(topic_num), headers = {"Authorization" : "Basic %s" % base64.b64encode(config.fts_username + ':' + config.fts_password)})
+
 
 #def main():
 #    application = webapp.WSGIApplication([

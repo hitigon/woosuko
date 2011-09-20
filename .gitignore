@@ -1,3 +1,7 @@
 .DS_Store
 *.pyc
 .idea
+media/upload/*
+iv2ex/config.py
+iv2ex/woosuko.py
+settings.py
