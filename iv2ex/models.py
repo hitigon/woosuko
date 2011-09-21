@@ -172,6 +172,8 @@ class Topic(models.Model):
     content_rendered = models.TextField(blank=True)
     content_length = models.IntegerField(blank=False, default=0)
     has_content = models.BooleanField(blank=False, default=True)
+    #has_image = models.BooleanField(blank=False, default=False)
+    #preview_image = models.TextField()
     hits = models.IntegerField(default=0)
     stars = models.IntegerField(blank=False, default=0)
     replies = models.IntegerField(default=0)
@@ -316,3 +318,6 @@ class ITaskQueue(models.Model):
     lock = models.IntegerField(blank=True, null=True, default=0)
     date = models.DateTimeField(auto_now_add=True)
 
+class KoreanGrammar(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True, default='')
+    content = models.TextField()

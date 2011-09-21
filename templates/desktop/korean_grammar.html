@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Grammar Search Engine - Woosuko.Com</title>
+		<script type="text/javascript" src="/media/js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#kw").focus();
+			});
+		</script>
+	</head>
+    <div id="Content">
+        <h1>Grammar Search Engine (Beta)</h1>
+        <div>
+			<form method="post" action="/korean/grammar/">
+			<div>
+				<label>关键字</label> <input id="key_word" name="key_word" type="text" /> <input type="submit" value="检索" />
+			</div>
+			<div>
+				<input type="radio" name="t" value="0" checked/> 模糊检索
+				<input type="radio" name="t" value="1"/> 深度检索
+			</div>
+			</form>
+		</div>
+		<hr />
+		<div>
+            {% if topic_list %}
+                {% ifnotequal topic_list_size 0 %}
+                <table>
+                    <thead>Result:</thead>
+                    <tbody>
+                        {% for topic in topic_list %}
+                        <tr>
+                            <td><b>{{ topic.title|safe }}</b></td>
+                        </tr>
+                        <tr>
+                            <td>{{ topic.content|safe }}</td>
+                        </tr>
+                        <tr>
+                            <td><br/></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                Your search - keyWord - did not match any documents.
+                {% endifnotequal %}
+            {% endif %}
+		</div>
+    </div>
+</body>
+</html>

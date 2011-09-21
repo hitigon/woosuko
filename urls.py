@@ -153,6 +153,11 @@ urlpatterns += patterns('',
     #(r'^twitter/api/$', itw.TwitterApiCheatSheetHandler),
 )
 
+from woosuko.iv2ex import korean_grammar as ik
+urlpatterns += patterns('',
+    (r'^korean/grammar/$', ik.TopicHandler),
+)
+
 from iv2ex.itaskqueue import ITaskQueueThread
 itaskqueue =  ITaskQueueThread(2)
 itaskqueue.start()
