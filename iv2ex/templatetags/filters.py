@@ -1,11 +1,18 @@
 #coding=utf-8
+'''
+Created on 11-9-13
+
+@intro: Based on Project Babel(V2EX) made by @Livid
+@author: qiaoshun8888
+
+'''
 
 from django import template 
 import re
 import logging
 from datetime import timedelta
 import urllib, hashlib
-
+import settings
 
 register = template.Library()
 
@@ -154,4 +161,27 @@ def escapejs(value):
     for bad, good in _js_escapes:
         value = value.replace(bad, good)
     return value
-register.filter(escapejs)
+
+
+#Added by JohnQiao 2011-9-21 13:19:06  (http://djangosnippets.org/snippets/2072/)
+def urlize_html(html):
+    """
+    Returns urls found in an (X)HTML text node element as urls via Django urlize filter.
+    """
+    from BeautifulSoup import BeautifulSoup
+    from django.utils.html import urlize
+    try:
+        pass
+    except ImportError:
+        if settings.DEBUG:
+            raise template.TemplateSyntaxError, "Error in urlize_html The Python BeautifulSoup libraries aren't installed."
+        return html
+    else:
+        soup = BeautifulSoup(html)
+
+        textNodes = soup.findAll(text=True)
+        for textNode in textNodes:
+            urlizedText = urlize(textNode)
+            textNode.replaceWith(urlizedText)
+        return str(soup)
+register.filter(urlize_html)

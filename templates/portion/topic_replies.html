@@ -24,7 +24,7 @@
                 <div class="sep3"></div>
                 <strong><a href="/member/{{ reply.created_by }}" class="dark">{{ reply.created_by }}</a></strong>{% if reply.source %}<span class="snow">&nbsp; via {{ reply.source }}</span>{% endif %}
                 <div class="sep5"></div>
-                <div class="content reply_content">{{ reply.content|imgly|clly|gist|mentions|safe|urlize|linebreaksbr }}</div> {# |youku #}
+                <div class="content reply_content">{{ reply.content|imgly|clly|mentions|urlize_html|safe|linebreaksbr }}</div> {# del gist linebreaksbr |youku #}
             </td>
     </table>
     <script>
