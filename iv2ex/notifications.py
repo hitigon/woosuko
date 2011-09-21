@@ -54,6 +54,9 @@ def NotificationsHandler(request):
                     if n.type == 'mention_topic':
                         n.text = u'<a href="/member/' + n.member.user.username + u'"><strong>' + n.member.user.username + u'</strong></a> 在创建主题 <a href="' + n.link1 + '">' + escape(n.label1) + u'</a> 时提到了你'
                         notifications.append(n)
+                    if n.type == 'follow':
+                        n.text = u'<a href="/member/' + n.member.user.username + u'"><strong>' + n.member.user.username + u'</strong></a> 关注了你'
+                        notifications.append(n)
                     i = i + 1
                 member.notifications = 0
                 member.save()

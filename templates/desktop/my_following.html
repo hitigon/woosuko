@@ -32,7 +32,7 @@
                                     {% endifnotequal %}
                                     <tr>
                                         <td width="24" align="left" valign="top">{{ bookmark.one|avatar:"mini"|safe }}</td>
-                                        <td width="auto" align="left" valign="top" style="padding-left: 10px;"><a href="/member/{{ bookmark.one.username }}">{{ bookmark.one.username|escape }}</a>
+                                        <td width="auto" align="left" valign="top" style="padding-left: 10px;"><a href="/member/{{ bookmark.one.user.username }}">{{ bookmark.one.user.username|escape }}</a>
                                             {% if bookmark.one.tagline %}
                                             <div class="sep3"></div>
                                             <small class="fade">{{ bookmark.one.tagline|escape }}</small>

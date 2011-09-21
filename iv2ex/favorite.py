@@ -5,8 +5,8 @@ Created on 11-9-14
 @author: qiaoshun8888
 '''
 from django.http import HttpResponseRedirect
-from iv2ex.itaskqueue import ITaskQueueManage
-from iv2ex.models import NodeBookmark, Member, TopicBookmark, MemberBookmark, Topic
+from iv2ex.itaskqueue import ITaskQueueManage, ITaskID
+from iv2ex.models import NodeBookmark, Member, TopicBookmark, MemberBookmark, Topic, Counter, Notification
 from v2ex.babel.da import GetKindByName, GetKindByNum
 from v2ex.babel.security import CheckAuth
 
@@ -137,11 +137,43 @@ def FollowMemberHandler(request, one_num):
                             memcache.set(n, True, 86400 * 14)
                             one = Member.objects.get(id=one.id)
                             one.followers_count = one.followers_count + 1
-                            one.save()
                             memcache.set('Member_' + str(one.num), one, 86400)
                             memcache.set('Member::' + str(one.username_lower), one, 86400)
                             session = request.session
                             session['message'] = '特别关注添加成功，还可以添加 ' + str(30 - member.favorited_members) + ' 位'
+                            # Send notification to following
+                            q = Counter.objects.filter(name='notification.max')
+                            if (len(q) == 1):
+                                counter = q[0]
+                                counter.value = counter.value + 1
+                            else:
+                                counter = Counter()
+                                counter.name = 'notification.max'
+                                counter.value = 1
+                            q2 = Counter.objects.filter(name='notification.total')
+                            if (len(q2) == 1):
+                                counter2 = q2[0]
+                                counter2.value = counter2.value + 1
+                            else:
+                                counter2 = Counter()
+                                counter2.name = 'notification.total'
+                                counter2.value = 1
+
+                            notification = Notification()
+                            notification.num = counter.value
+                            notification.type = 'follow'
+                            notification.payload = ''
+                            notification.label1 = ''
+                            notification.link1 = ''
+                            notification.member = member
+                            notification.for_member_num = one.num
+
+                            one.notifications = one.notifications + 1
+
+                            one.save()
+                            counter.save()
+                            counter2.save()
+                            notification.save()
         return HttpResponseRedirect(go)
 
 def UnfollowMemberHandler(request, one_num):
