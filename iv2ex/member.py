@@ -521,7 +521,7 @@ def SettingsHandler(request):
                 template_values['member_twitter_sync'] = member_twitter_sync
             # Verification: use_my_css
             member_use_my_css = None
-            if 'user_my_css' in request.POST:
+            if 'use_my_css' in request.POST:
                 member_use_my_css = request.POST['use_my_css']
             else:
                 member_use_my_css = ''

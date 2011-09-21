@@ -28,7 +28,7 @@
             {% include 'desktop/rightbar/user.html' %}
             <div class="sep20"></div>
             {% if node.sidebar %}
-            <div class="box"><div class="inner">{{ node.sidebar }}</div></div>
+            <div class="box"><div class="inner">{{ node.sidebar|safe }}</div></div>
             <div class="sep20"></div>
             {% endif %}
             {% if topic.node.sidebar_ads %}
